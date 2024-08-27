@@ -47,12 +47,15 @@ import { useDispatch } from "react-redux";
 import { saveAdmin } from "../../../redux/slices/auth";
 
 function Basic() {
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [rememberMe, setRememberMe] = useState(false);
-    const [alert, setAlert] = useState({ show: false, message: "", color: "error" });
+    const [alert, setAlert] = useState({
+        show: false,
+        message: "",
+        color: "error",
+    });
 
     const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -61,7 +64,7 @@ function Basic() {
         setTimeout(() => {
             setAlert({ show: false, message: "", color: "error" });
         }, 2000);
-    }
+    };
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -74,16 +77,25 @@ function Basic() {
 
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
-        const checkLogin = emailRegex.test(values.email) && passwordRegex.test(values.password);
+        const checkLogin =
+            emailRegex.test(values.email) &&
+            passwordRegex.test(values.password);
 
         if (!checkLogin) {
-            setAlert({ show: true, message: "Please enter a valid input", color: "error" });
+            setAlert({
+                show: true,
+                message: "Please enter a valid input",
+                color: "error",
+            });
             setTimeout(() => {
                 setAlert({ show: false, message: "", color: "error" });
             }, 2000);
         } else {
             try {
-                const result = await axios.post('http://localhost:3003/auth/login', { ...values, role: ROLE.ADMIN });
+                const result = await axios.post(
+                    "https://uniqlo-be-c7v8.onrender.com/auth/login",
+                    { ...values, role: ROLE.ADMIN }
+                );
                 if (result.data.statusCode === 200) {
                     dispatch(saveAdmin(result.data.data));
                     handleShowAlert(result.data.message, "success");
@@ -97,7 +109,7 @@ function Basic() {
 
     return (
         <>
-            {alert.show &&
+            {alert.show && (
                 <div style={{ position: "fixed", top: 0, right: 0, zIndex: 1 }}>
                     <MDAlert color={alert.color} dismissible>
                         <MDTypography variant="body2" color="white">
@@ -105,7 +117,7 @@ function Basic() {
                         </MDTypography>
                     </MDAlert>
                 </div>
-            }
+            )}
             <BasicLayout image={bgImage}>
                 <Card>
                     <MDBox
@@ -119,22 +131,47 @@ function Basic() {
                         mb={1}
                         textAlign="center"
                     >
-                        <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                        <MDTypography
+                            variant="h4"
+                            fontWeight="medium"
+                            color="white"
+                            mt={1}
+                        >
                             Sign in
                         </MDTypography>
-                        <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
+                        <Grid
+                            container
+                            spacing={3}
+                            justifyContent="center"
+                            sx={{ mt: 1, mb: 2 }}
+                        >
                             <Grid item xs={2}>
-                                <MDTypography component={MuiLink} href="#" variant="body1" color="white">
+                                <MDTypography
+                                    component={MuiLink}
+                                    href="#"
+                                    variant="body1"
+                                    color="white"
+                                >
                                     <FacebookIcon color="inherit" />
                                 </MDTypography>
                             </Grid>
                             <Grid item xs={2}>
-                                <MDTypography component={MuiLink} href="#" variant="body1" color="white">
+                                <MDTypography
+                                    component={MuiLink}
+                                    href="#"
+                                    variant="body1"
+                                    color="white"
+                                >
                                     <GitHubIcon color="inherit" />
                                 </MDTypography>
                             </Grid>
                             <Grid item xs={2}>
-                                <MDTypography component={MuiLink} href="#" variant="body1" color="white">
+                                <MDTypography
+                                    component={MuiLink}
+                                    href="#"
+                                    variant="body1"
+                                    color="white"
+                                >
                                     <GoogleIcon color="inherit" />
                                 </MDTypography>
                             </Grid>
@@ -143,30 +180,52 @@ function Basic() {
                     <MDBox pt={4} pb={3} px={3}>
                         <MDBox component="form" role="form" onSubmit={onSubmit}>
                             <MDBox mb={2}>
-                                <MDInput name="email" type="email" label="Email" fullWidth
+                                <MDInput
+                                    name="email"
+                                    type="email"
+                                    label="Email"
+                                    fullWidth
                                     inputProps={{
-                                        pattern: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/,
-                                        title: "Please enter a valid email"
+                                        pattern:
+                                            /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/,
+                                        title: "Please enter a valid email",
                                     }}
                                 />
                             </MDBox>
                             <MDBox mb={2}>
-                                <MDInput name="password" type="password" label="Password" fullWidth />
+                                <MDInput
+                                    name="password"
+                                    type="password"
+                                    label="Password"
+                                    fullWidth
+                                />
                             </MDBox>
                             <MDBox display="flex" alignItems="center" ml={-1}>
-                                <Switch checked={rememberMe} onChange={handleSetRememberMe} />
+                                <Switch
+                                    checked={rememberMe}
+                                    onChange={handleSetRememberMe}
+                                />
                                 <MDTypography
                                     variant="button"
                                     fontWeight="regular"
                                     color="text"
                                     onClick={handleSetRememberMe}
-                                    sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
+                                    sx={{
+                                        cursor: "pointer",
+                                        userSelect: "none",
+                                        ml: -1,
+                                    }}
                                 >
                                     &nbsp;&nbsp;Remember me
                                 </MDTypography>
                             </MDBox>
                             <MDBox mt={4} mb={1}>
-                                <MDButton variant="gradient" color="info" fullWidth type="submit">
+                                <MDButton
+                                    variant="gradient"
+                                    color="info"
+                                    fullWidth
+                                    type="submit"
+                                >
                                     sign in
                                 </MDButton>
                             </MDBox>

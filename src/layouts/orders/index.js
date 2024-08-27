@@ -315,7 +315,7 @@ function Orders() {
                                         <TablePagination
                                             rowsPerPageOptions={[10, 25, 100]}
                                             component="div"
-                                            count={orders.length}
+                                            count={orders?.length}
                                             rowsPerPage={rowsPerPage}
                                             page={page}
                                             onPageChange={handleChangePage}

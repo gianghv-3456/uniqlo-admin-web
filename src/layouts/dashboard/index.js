@@ -39,49 +39,82 @@ import { useSelector } from "react-redux";
 function Dashboard() {
     const { sales, tasks } = reportsLineChartData;
 
-    const brands = useSelector(state => state.brand.data);
-    const products = useSelector(state => state.product.data);
-    const orders = useSelector(state => state.order.data);
-    const accounts = useSelector(state => state.account.data);
+    const brands = useSelector((state) => state.brand.data);
+    const products = useSelector((state) => state.product.data);
+    const orders = useSelector((state) => state.order.data);
+    const accounts = useSelector((state) => state.account.data);
 
     function calculateProducts(dataArray) {
         const currentDate = new Date();
         const firstDayOfWeek = new Date(currentDate);
         firstDayOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
         firstDayOfWeek.setHours(0, 0, 0, 0);
-        const filteredData = dataArray.filter(item => {
+        const filteredData = dataArray?.filter((item) => {
             const itemDate = new Date(item.createdAt);
             return itemDate >= firstDayOfWeek && itemDate <= currentDate;
         });
-        const percent = parseInt(filteredData.length / dataArray.length * 100);
-        return [filteredData.length, dataArray.length, percent];
+        const percent = parseInt(
+            (filteredData?.length / dataArray?.length) * 100
+        );
+        return [filteredData?.length, dataArray?.length, percent];
     }
 
     function calculateOrders(dataArray) {
         const currentDate = new Date();
-        const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        const firstDayOfMonth = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            1
+        );
 
-        const filteredData = dataArray.filter(item => {
+        const filteredData = dataArray?.filter((item) => {
             const itemDate = new Date(item.date);
-            return itemDate >= firstDayOfMonth && itemDate <= currentDate && item.status;
+            return (
+                itemDate >= firstDayOfMonth &&
+                itemDate <= currentDate &&
+                item.status
+            );
         });
 
-        const totalMoneyLastMonth = filteredData.reduce((total, item) => total + parseFloat(item.total), 0);
-        const countOrderLastMonth = filteredData.length;
+        const totalMoneyLastMonth = filteredData?.reduce(
+            (total, item) => total + parseFloat(item.total),
+            0
+        );
+        const countOrderLastMonth = filteredData?.length;
 
-        const dataAccept = filteredData.filter((item) => item.status === 'accept');
+        const dataAccept = filteredData?.filter(
+            (item) => item.status === "accept"
+        );
 
-        const totalMoneyHave = dataAccept.reduce((total, item) => total + parseFloat(item.total), 0);
-        const countOrderHave = dataAccept.length;
+        const totalMoneyHave = dataAccept?.reduce(
+            (total, item) => total + parseFloat(item.total),
+            0
+        );
+        const countOrderHave = dataAccept?.length;
 
-        const percentMoney = (totalMoneyHave / totalMoneyLastMonth * 100).toFixed(2);
+        const percentMoney = (
+            (totalMoneyHave / totalMoneyLastMonth) *
+            100
+        )?.toFixed(2);
 
-        return [countOrderHave, countOrderLastMonth, totalMoneyHave.toFixed(2), totalMoneyLastMonth.toFixed(2), parseInt(percentMoney)];
+        return [
+            countOrderHave,
+            countOrderLastMonth,
+            totalMoneyHave?.toFixed(2),
+            totalMoneyLastMonth?.toFixed(2),
+            parseInt(percentMoney),
+        ];
     }
 
-    const [countProductWeek, countProduct, percentProduct] = calculateProducts(products);
-    const [countOrderHave, countOrderLastMonth, totalMoneyHave, totalMoneyLastMonth, percentMoney] = calculateOrders(orders);
-
+    const [countProductWeek, countProduct, percentProduct] =
+        calculateProducts(products);
+    const [
+        countOrderHave,
+        countOrderLastMonth,
+        totalMoneyHave,
+        totalMoneyLastMonth,
+        percentMoney,
+    ] = calculateOrders(orders);
 
     return (
         <DashboardLayout>
@@ -110,8 +143,14 @@ function Dashboard() {
                                 title="Bills"
                                 count={
                                     <div style={{ fontSize: 14 }}>
-                                        <span>{countOrderHave} / {countOrderLastMonth}</span>
-                                        <p>${totalMoneyHave} / ${totalMoneyLastMonth}</p>
+                                        <span>
+                                            {countOrderHave} /{" "}
+                                            {countOrderLastMonth}
+                                        </span>
+                                        <p>
+                                            ${totalMoneyHave} / $
+                                            {totalMoneyLastMonth}
+                                        </p>
                                     </div>
                                 }
                                 percentage={{
@@ -128,7 +167,7 @@ function Dashboard() {
                                 color="success"
                                 icon="store"
                                 title="Brands"
-                                count={brands.length}
+                                count={brands?.length}
                                 percentage={{
                                     color: "success",
                                     amount: "+1%",
@@ -143,7 +182,7 @@ function Dashboard() {
                                 color="primary"
                                 icon="person_add"
                                 title="Users"
-                                count={`+${accounts.length}`}
+                                count={`+${accounts?.length}`}
                                 percentage={{
                                     color: "success",
                                     amount: "",
@@ -173,7 +212,8 @@ function Dashboard() {
                                     title="daily sales"
                                     description={
                                         <>
-                                            (<strong>+15%</strong>) increase in today sales.
+                                            (<strong>+15%</strong>) increase in
+                                            today sales.
                                         </>
                                     }
                                     date="updated 4 min ago"
