@@ -15,8 +15,10 @@ const instanceAxios = axios.create({
 instanceAxios.interceptors.request.use(
     async (config) => {
         const [access_token, refresh_token] = useToken();
+        const accessToken = localStorage.getItem("accessToken") || access_token;
+
         let date = new Date();
-        const decodedAccessToken = jwtDecode(access_token);
+        const decodedAccessToken = jwtDecode(accessToken);
         if (decodedAccessToken.exp < date.getTime() / 1000) {
             const [newAccessToken, newRefreshToken] = await refreshToken(
                 refresh_token
@@ -29,7 +31,7 @@ instanceAxios.interceptors.request.use(
             );
             config.headers.Authorization = `Bearer ${newAccessToken}`;
         } else {
-            config.headers.Authorization = `Bearer ${access_token}`;
+            config.headers.Authorization = `Bearer ${accessToken}`;
         }
         return config;
     },

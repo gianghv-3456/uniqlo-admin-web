@@ -46,9 +46,16 @@ import { ROLE } from "constants/constant";
 import { useDispatch } from "react-redux";
 import { saveAdmin } from "../../../redux/slices/auth";
 
+import { getCategories } from "../../../redux/slices/category";
+import { getBrands } from "../../../redux/slices/brand";
+import { getProducts } from "../../../redux/slices/products";
+import { getOrders } from "../../../redux/slices/order";
+import { getAccounts } from "../../../redux/slices/account";
+
 function Basic() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const dispatchRedux = useDispatch();
 
     const [rememberMe, setRememberMe] = useState(false);
     const [alert, setAlert] = useState({
@@ -97,6 +104,15 @@ function Basic() {
                     { ...values, role: ROLE.ADMIN }
                 );
                 if (result.data.statusCode === 200) {
+                    localStorage.setItem(
+                        "accessToken",
+                        result.data.data.accessToken
+                    );
+                    dispatchRedux(getCategories());
+                    dispatchRedux(getBrands());
+                    dispatchRedux(getProducts());
+                    dispatchRedux(getOrders());
+                    dispatchRedux(getAccounts());
                     dispatch(saveAdmin(result.data.data));
                     handleShowAlert(result.data.message, "success");
                     navigate("/dashboard", { replace: true });
