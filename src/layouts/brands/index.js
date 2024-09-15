@@ -11,34 +11,34 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
-import Paper from '@mui/material/Paper';
-import Avatar from '@mui/material/Avatar';
+import Paper from "@mui/material/Paper";
+import Avatar from "@mui/material/Avatar";
 
 // Data
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import MDButton from "components/MDButton";
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
+import { styled, alpha } from "@mui/material/styles";
 
 // Modal
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { uploadImage } from "common/upload";
 import { usernamePattern } from "constants/regex";
 import MDAlert from "components/MDAlert";
@@ -46,82 +46,82 @@ import MDTypography from "components/MDTypography";
 import { getBrands } from "../../redux/slices/brand";
 import instanceAxios from "../../configs/axios";
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import { render } from "react-dom";
 import Icon from "@mui/material/Icon";
 
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
+const Search = styled("div")(({ theme }) => ({
+    position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.80),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.90),
+    backgroundColor: alpha(theme.palette.common.white, 0.8),
+    "&:hover": {
+        backgroundColor: alpha(theme.palette.common.white, 0.9),
     },
     marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(1),
-        width: 'auto',
+        width: "auto",
     },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled("div")(({ theme }) => ({
     padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
+    color: "inherit",
     height: 32,
-    width: '100%',
-    '& .MuiInputBase-input': {
+    width: "100%",
+    "& .MuiInputBase-input": {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
+        transition: theme.transitions.create("width"),
+        [theme.breakpoints.up("sm")]: {
+            width: "12ch",
+            "&:focus": {
+                width: "20ch",
             },
         },
     },
 }));
 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.secondary,
-    display: 'flex',
-    justifyContent: 'space-between'
+    display: "flex",
+    justifyContent: "space-between",
 }));
 
-const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
+const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
     height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
+    overflow: "hidden",
+    position: "absolute",
     bottom: 0,
     left: 0,
-    whiteSpace: 'nowrap',
+    whiteSpace: "nowrap",
     width: 1,
 });
 
@@ -130,29 +130,35 @@ const defaultValuesForm = { open: false, title: "Add", data: null };
 function Brands() {
     const dispatch = useDispatch();
 
-    const categories = useSelector(state => state.category.data.filter(cate => cate.active));
+    const categories = useSelector((state) =>
+        state?.category.data.filter((cate) => cate.active)
+    );
     const [selectCategory, setSelectCategory] = useState(0);
-    let brands = useSelector(state => {
+    let brands = useSelector((state) => {
         if (selectCategory === 0) {
             return state.brand.data;
         } else {
-            return state.brand.data.filter(item => item.category.id === selectCategory);
+            return state.brand.data.filter(
+                (item) => item?.category.id === selectCategory
+            );
         }
     });
-    console.log(brands);
-    // brands.sort((a, b) => a.id - b.id);
 
     const [formControl, setFormControl] = useState(defaultValuesForm);
     const [imageUrl, setImageUrl] = useState();
     const [showError, setShowError] = useState(false);
-    const [alert, setAlert] = useState({ show: false, message: "", color: "error" });
+    const [alert, setAlert] = useState({
+        show: false,
+        message: "",
+        color: "error",
+    });
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [keyword, setKeyword] = useState("");
 
     const handleChangeSelectCategory = (value) => {
-        setSelectCategory(value)
-    }
+        setSelectCategory(value);
+    };
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -163,21 +169,20 @@ function Brands() {
         setPage(0);
     };
 
-
     const handleShowAlert = (message, color) => {
         setAlert({ show: true, message, color });
         setTimeout(() => {
             setAlert({ show: false, message: "", color: "error" });
         }, 2000);
-    }
+    };
 
     const handleFileChange = async (e) => {
         const url = await uploadImage(e.target.files[0]);
         setImageUrl(url);
-    }
+    };
 
     const handleClickOpen = () => {
-        setFormControl(pre => ({ ...pre, open: true }));
+        setFormControl((pre) => ({ ...pre, open: true }));
     };
 
     const handleClose = () => {
@@ -189,18 +194,18 @@ function Brands() {
         try {
             const result = await instanceAxios.delete(`/brands/${id}`);
             if (result.data.statusCode === 200) {
-                handleShowAlert(result.data.message, "success")
+                handleShowAlert(result.data.message, "success");
             }
         } catch (error) {
-            handleShowAlert(error.response.data.message, "error")
+            handleShowAlert(error.response.data.message, "error");
         }
-        dispatch(getBrands())
-        handleClose()
-    }
+        dispatch(getBrands());
+        handleClose();
+    };
 
     const handleClickEdit = (brand) => {
-        setFormControl({ open: true, title: "Update", data: brand })
-    }
+        setFormControl({ open: true, title: "Update", data: brand });
+    };
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -211,7 +216,6 @@ function Brands() {
         }
 
         if (formControl.title === "Update") {
-
             // const check = usernamePattern.test(values.name);
             // if (!check) {
             //     setShowError(true);
@@ -221,7 +225,7 @@ function Brands() {
 
             let dataUpdate = { ...formControl.data, ...values };
             if (imageUrl) {
-                dataUpdate.logo = imageUrl
+                dataUpdate.logo = imageUrl;
             }
 
             dataUpdate.category_id = parseInt(dataUpdate.category_id);
@@ -229,22 +233,27 @@ function Brands() {
             dataUpdate.active = dataUpdate.active === "true" ? true : false;
 
             try {
-                const result = await instanceAxios.put(`/brands/update`, dataUpdate);
+                const result = await instanceAxios.put(
+                    `/brands/update`,
+                    dataUpdate
+                );
                 if (result.data.statusCode === 200) {
-                    handleShowAlert(result.data.message, "success")
+                    handleShowAlert(result.data.message, "success");
                 }
             } catch (error) {
-                handleShowAlert(error.response.data.message, "error")
+                handleShowAlert(error.response.data.message, "error");
             }
-            dispatch(getBrands())
-            handleClose()
+            dispatch(getBrands());
+            handleClose();
             return;
         }
 
         const check = imageUrl && values.category_id;
         if (!check) {
             setShowError(true);
-            setTimeout(() => { setShowError(false) }, 2000);
+            setTimeout(() => {
+                setShowError(false);
+            }, 2000);
             return;
         }
 
@@ -254,42 +263,48 @@ function Brands() {
         try {
             const result = await instanceAxios.post("/brands/create", data);
             if (result.data.statusCode === 201) {
-                handleShowAlert(result.data.message, "success")
+                handleShowAlert(result.data.message, "success");
             }
         } catch (error) {
             console.log(error);
-            handleShowAlert(error.response.data.message, "error")
+            handleShowAlert(error.response.data.message, "error");
         }
-        dispatch(getBrands())
-        handleClose()
-    }
+        dispatch(getBrands());
+        handleClose();
+    };
 
     return (
         <>
-
-            {alert.show &&
-                <div style={{ position: "fixed", top: 120, right: 0, zIndex: 999 }}>
+            {alert.show && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 120,
+                        right: 0,
+                        zIndex: 999,
+                    }}
+                >
                     <MDAlert color={alert.color} dismissible>
                         <MDTypography variant="body2" color="white">
                             {alert.message}
                         </MDTypography>
                     </MDAlert>
                 </div>
-            }
-
+            )}
 
             <Dialog
                 open={formControl.open}
                 onClose={handleClose}
                 PaperProps={{
-                    component: 'form',
+                    component: "form",
                     onSubmit: onSubmit,
                 }}
             >
                 <DialogTitle>Subscribe</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Be careful when updating this information, making sure you remember your information.
+                        Be careful when updating this information, making sure
+                        you remember your information.
                     </DialogContentText>
                     <TextField
                         autoFocus
@@ -305,9 +320,16 @@ function Brands() {
                     />
 
                     <FormControl sx={{ minWidth: 80 }}>
-                        <Avatar style={{ width: 100, height: 'fit-content', marginTop: 12 }} alt="Avatar"
+                        <Avatar
+                            style={{
+                                width: 100,
+                                height: "fit-content",
+                                marginTop: 12,
+                            }}
+                            alt="Avatar"
                             src={imageUrl || formControl.data?.logo}
-                            variant="rounded" />
+                            variant="rounded"
+                        />
                         <Button
                             component="label"
                             role={undefined}
@@ -318,28 +340,42 @@ function Brands() {
                             size="small"
                         >
                             Upload file
-                            <VisuallyHiddenInput type="file" accept="image/*" onChange={handleFileChange} />
+                            <VisuallyHiddenInput
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                            />
                         </Button>
                     </FormControl>
 
                     <FormControl fullWidth style={{ marginTop: 12 }}>
-                        <InputLabel id="demo-simple-select-label-cate" style={{ height: 32 }}>Category</InputLabel>
+                        <InputLabel
+                            id="demo-simple-select-label-cate"
+                            style={{ height: 32 }}
+                        >
+                            Category
+                        </InputLabel>
                         <Select
                             labelId="demo-simple-select-label-cate"
                             id="demo-simple-select"
                             label="Category"
                             style={{ height: 32 }}
                             name="category_id"
-                            defaultValue={formControl.title === "Update" ? formControl.data.category.id : null}
+                            defaultValue={
+                                formControl.title === "Update"
+                                    ? formControl.data.category.id
+                                    : null
+                            }
                         >
                             {categories.map((category) => (
-                                <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+                                <MenuItem key={category.id} value={category.id}>
+                                    {category.name}
+                                </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
 
-                    {
-                        formControl.title === "Update" &&
+                    {formControl.title === "Update" && (
                         <FormControl mt={4}>
                             <RadioGroup
                                 row
@@ -347,18 +383,25 @@ function Brands() {
                                 name="active"
                                 defaultValue={formControl.data.active}
                             >
-                                <FormControlLabel value={true} control={<Radio />} label="Active" />
-                                <FormControlLabel value={false} control={<Radio />} label="Disable" />
+                                <FormControlLabel
+                                    value={true}
+                                    control={<Radio />}
+                                    label="Active"
+                                />
+                                <FormControlLabel
+                                    value={false}
+                                    control={<Radio />}
+                                    label="Disable"
+                                />
                             </RadioGroup>
                         </FormControl>
-                    }
+                    )}
 
-                    {
-                        showError &&
+                    {showError && (
                         <DialogContentText style={{ color: "red" }}>
                             Data field pattern mismatch.
                         </DialogContentText>
-                    }
+                    )}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
@@ -373,26 +416,61 @@ function Brands() {
                         <Grid item xs={12}>
                             <Card>
                                 <MDBox
-                                    mx={2} mt={-3} py={3} px={2}
-                                    display="flex" justifyContent="space-between" alignItems="center"
-                                    variant="gradient" bgColor="info"
-                                    borderRadius="lg" coloredShadow="info"
+                                    mx={2}
+                                    mt={-3}
+                                    py={3}
+                                    px={2}
+                                    display="flex"
+                                    justifyContent="space-between"
+                                    alignItems="center"
+                                    variant="gradient"
+                                    bgColor="info"
+                                    borderRadius="lg"
+                                    coloredShadow="info"
                                 >
-                                    <MDButton size="small" onClick={handleClickOpen}>Add</MDButton>
+                                    <MDButton
+                                        size="small"
+                                        onClick={handleClickOpen}
+                                    >
+                                        Add
+                                    </MDButton>
                                     <MDBox>
                                         <Box sx={{ minWidth: 100 }}>
                                             <FormControl fullWidth>
-                                                <InputLabel style={{ color: "white", height: 32 }} id="demo-simple-select-label">Category</InputLabel>
+                                                <InputLabel
+                                                    style={{
+                                                        color: "white",
+                                                        height: 32,
+                                                    }}
+                                                    id="demo-simple-select-label"
+                                                >
+                                                    Category
+                                                </InputLabel>
                                                 <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
                                                     label="Category"
-                                                    style={{ width: 100, height: 32, color: "red" }}
-                                                    onChange={(event) => handleChangeSelectCategory(event.target.value)}
+                                                    style={{
+                                                        width: 100,
+                                                        height: 32,
+                                                        color: "red",
+                                                    }}
+                                                    onChange={(event) =>
+                                                        handleChangeSelectCategory(
+                                                            event.target.value
+                                                        )
+                                                    }
                                                 >
-                                                    <MenuItem value={0}>All</MenuItem>
-                                                    {categories.map(cate => (
-                                                        <MenuItem key={cate.id} value={cate.id}>{cate.name}</MenuItem>
+                                                    <MenuItem value={0}>
+                                                        All
+                                                    </MenuItem>
+                                                    {categories.map((cate) => (
+                                                        <MenuItem
+                                                            key={cate.id}
+                                                            value={cate.id}
+                                                        >
+                                                            {cate.name}
+                                                        </MenuItem>
                                                     ))}
                                                 </Select>
                                             </FormControl>
@@ -405,44 +483,126 @@ function Brands() {
                                         <StyledInputBase
                                             value={keyword}
                                             placeholder="Search…"
-                                            inputProps={{ 'aria-label': 'search' }}
-                                            onChange={(e) => setKeyword(e.target.value)}
+                                            inputProps={{
+                                                "aria-label": "search",
+                                            }}
+                                            onChange={(e) =>
+                                                setKeyword(e.target.value)
+                                            }
                                         />
                                     </Search>
                                 </MDBox>
                                 <MDBox pt={3}>
-                                    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+                                    <Paper
+                                        sx={{
+                                            width: "100%",
+                                            overflow: "hidden",
+                                        }}
+                                    >
                                         <TableContainer sx={{ maxHeight: 440 }}>
-                                            <Table stickyHeader aria-label="sticky table">
+                                            <Table
+                                                stickyHeader
+                                                aria-label="sticky table"
+                                            >
                                                 <TableBody>
                                                     {brands
-                                                        .filter((item) => item.name.toLowerCase().includes(keyword.trim().toLowerCase()))
-                                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                        .filter((item) =>
+                                                            item.name
+                                                                .toLowerCase()
+                                                                .includes(
+                                                                    keyword
+                                                                        .trim()
+                                                                        .toLowerCase()
+                                                                )
+                                                        )
+                                                        .slice(
+                                                            page * rowsPerPage,
+                                                            page * rowsPerPage +
+                                                                rowsPerPage
+                                                        )
                                                         .map((row) => {
                                                             return (
-                                                                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                                                    <TableCell key="logo" align="center">
-                                                                        <Avatar variant="rounded" alt="Avatar" src={row.logo}
-                                                                            style={{ width: 50, height: 'fit-content' }} />
+                                                                <TableRow
+                                                                    hover
+                                                                    role="checkbox"
+                                                                    tabIndex={
+                                                                        -1
+                                                                    }
+                                                                    key={row.id}
+                                                                >
+                                                                    <TableCell
+                                                                        key="logo"
+                                                                        align="center"
+                                                                    >
+                                                                        <Avatar
+                                                                            variant="rounded"
+                                                                            alt="Avatar"
+                                                                            src={
+                                                                                row.logo
+                                                                            }
+                                                                            style={{
+                                                                                width: 50,
+                                                                                height: "fit-content",
+                                                                            }}
+                                                                        />
                                                                     </TableCell>
-                                                                    <TableCell key="name" align="left">
-                                                                        {row.name}
+                                                                    <TableCell
+                                                                        key="name"
+                                                                        align="left"
+                                                                    >
+                                                                        {
+                                                                            row.name
+                                                                        }
                                                                     </TableCell>
-                                                                    <TableCell key="active" align="center">
-                                                                        {row.active ? "Active" : "Disable"}
+                                                                    <TableCell
+                                                                        key="active"
+                                                                        align="center"
+                                                                    >
+                                                                        {row.active
+                                                                            ? "Active"
+                                                                            : "Disable"}
                                                                     </TableCell>
-                                                                    <TableCell key="category" align="center">
-                                                                        {row.category.name}
+                                                                    <TableCell
+                                                                        key="category"
+                                                                        align="center"
+                                                                    >
+                                                                        {
+                                                                            row
+                                                                                .category
+                                                                                .name
+                                                                        }
                                                                     </TableCell>
-                                                                    <TableCell key="action" align="center">
-                                                                        <Icon fontSize="small"
-                                                                            style={{ marginRight: 12, cursor: "pointer", color: "green" }}
-                                                                            onClick={() => handleClickEdit(row)}>
+                                                                    <TableCell
+                                                                        key="action"
+                                                                        align="center"
+                                                                    >
+                                                                        <Icon
+                                                                            fontSize="small"
+                                                                            style={{
+                                                                                marginRight: 12,
+                                                                                cursor: "pointer",
+                                                                                color: "green",
+                                                                            }}
+                                                                            onClick={() =>
+                                                                                handleClickEdit(
+                                                                                    row
+                                                                                )
+                                                                            }
+                                                                        >
                                                                             edit_icon
                                                                         </Icon>
-                                                                        <Icon fontSize="small"
-                                                                            style={{ cursor: "pointer", color: "red" }}
-                                                                            onClick={() => handleDelete(row.id)}>
+                                                                        <Icon
+                                                                            fontSize="small"
+                                                                            style={{
+                                                                                cursor: "pointer",
+                                                                                color: "red",
+                                                                            }}
+                                                                            onClick={() =>
+                                                                                handleDelete(
+                                                                                    row.id
+                                                                                )
+                                                                            }
+                                                                        >
                                                                             delete_icon
                                                                         </Icon>
                                                                     </TableCell>
@@ -459,7 +619,9 @@ function Brands() {
                                             rowsPerPage={rowsPerPage}
                                             page={page}
                                             onPageChange={handleChangePage}
-                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                            onRowsPerPageChange={
+                                                handleChangeRowsPerPage
+                                            }
                                         />
                                     </Paper>
                                 </MDBox>
