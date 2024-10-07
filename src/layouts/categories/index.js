@@ -102,6 +102,7 @@ function Categories() {
             const data = { ...formControl.data, ...values };
             data.active = data.active === "true" ? true : false;
             delete data.brands;
+            data.brand_ids = [];
             try {
                 const result = await instanceAxios.put(
                     `/categories/update`,
@@ -119,6 +120,7 @@ function Categories() {
         }
 
         try {
+            values.brand_ids = [];
             const result = await instanceAxios.post(
                 "/categories/create",
                 values
