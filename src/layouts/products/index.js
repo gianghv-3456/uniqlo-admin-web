@@ -154,7 +154,6 @@ function Products() {
                 .sort((a, b) => a.id - b.id);
         }
     });
-    console.log("brand", brands);
 
     const [selectBrand, setSelectBrand] = useState(0);
     const products = useSelector((state) => {
@@ -291,8 +290,8 @@ function Products() {
             dataUpdate.brand_id = parseInt(dataUpdate.brand_id);
             dataUpdate.price = parseFloat(dataUpdate.price);
             dataUpdate.category_id = brands.find(
-                (b) => b.id === dataUpdate.brand_id
-            )?.category.id;
+                (b) => b?.id === dataUpdate?.brand_id
+            )?.categories?.[0]?.id;
 
             delete dataUpdate.images;
             delete dataUpdate.brand;
@@ -303,7 +302,7 @@ function Products() {
 
             try {
                 const result = await instanceAxios.put(
-                    `/products/update`,
+                    `v2/products/update`,
                     dataUpdate
                 );
                 if (result.data.statusCode === 201) {
@@ -331,11 +330,11 @@ function Products() {
         data.brand_id = parseInt(data.brand_id);
         data.price = parseFloat(data.price);
         data.category_id = brands.find(
-            (b) => b.id === data.brand_id
-        ).category.id;
+            (b) => b?.id === data?.brand_id
+        )?.categories?.[0]?.id;
 
         try {
-            const result = await instanceAxios.post("/products/create", data);
+            const result = await instanceAxios.post("products/create", data);
             if (result.data.statusCode === 201) {
                 handleShowAlert(result.data.message, "success");
             }
@@ -479,10 +478,12 @@ function Products() {
                                     : null
                             }
                         >
-                            {brands.map((b) => (
-                                <MenuItem key={b.id} value={b.id}>
-                                    {b.name}
-                                    {`(${b.category.name})`}
+                            {brands?.map((b) => (
+                                <MenuItem key={b?.id} value={b?.id}>
+                                    {b?.name}
+                                    {`(${b?.categories
+                                        ?.map((i) => i?.name)
+                                        ?.join(", ")})`}
                                 </MenuItem>
                             ))}
                         </Select>
@@ -749,13 +750,18 @@ function Products() {
                                                     <MenuItem value={0}>
                                                         All
                                                     </MenuItem>
-                                                    {brands.map((brand) => (
+                                                    {brands?.map((brand) => (
                                                         <MenuItem
-                                                            key={brand.id}
-                                                            value={brand.id}
+                                                            key={brand?.id}
+                                                            value={brand?.id}
                                                         >
-                                                            {brand.name}
-                                                            {`(${brand.category.name})`}
+                                                            {brand?.name}
+                                                            {`(${brand?.categories
+                                                                ?.map(
+                                                                    (i) =>
+                                                                        i?.name
+                                                                )
+                                                                ?.join(", ")})`}
                                                         </MenuItem>
                                                     ))}
                                                 </Select>

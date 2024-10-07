@@ -228,7 +228,7 @@ function Brands() {
                 dataUpdate.logo = imageUrl;
             }
 
-            dataUpdate.category_id = parseInt(dataUpdate.category_id);
+            dataUpdate.category_ids = [parseInt(dataUpdate.category_id)];
             delete dataUpdate.category;
             dataUpdate.active = dataUpdate.active === "true" ? true : false;
 
@@ -258,7 +258,7 @@ function Brands() {
         }
 
         const data = { ...values, logo: imageUrl };
-        data.category_id = parseInt(data.category_id);
+        data.category_ids = [parseInt(data.category_id)];
 
         try {
             const result = await instanceAxios.post("/brands/create", data);
@@ -363,7 +363,7 @@ function Brands() {
                             name="category_id"
                             defaultValue={
                                 formControl.title === "Update"
-                                    ? formControl.data.category.id
+                                    ? formControl.data.categories?.[0]?.id
                                     : null
                             }
                         >
@@ -551,7 +551,7 @@ function Brands() {
                                                                         align="left"
                                                                     >
                                                                         {
-                                                                            row.name
+                                                                            row?.name
                                                                         }
                                                                     </TableCell>
                                                                     <TableCell
@@ -566,11 +566,16 @@ function Brands() {
                                                                         key="category"
                                                                         align="center"
                                                                     >
-                                                                        {
-                                                                            row
-                                                                                .category
-                                                                                .name
-                                                                        }
+                                                                        {row?.categories
+                                                                            ?.map(
+                                                                                (
+                                                                                    i
+                                                                                ) =>
+                                                                                    i?.name
+                                                                            )
+                                                                            ?.join(
+                                                                                ", "
+                                                                            )}
                                                                     </TableCell>
                                                                     <TableCell
                                                                         key="action"
