@@ -7,7 +7,7 @@ import { saveToken } from "../redux/slices/auth";
 
 // Tạo một instance Axios
 const instanceAxios = axios.create({
-    baseURL: "https://uniqlo-be-c7v8.onrender.com", // URL cơ sở của API
+    baseURL: "https://uniqlo-be-f348.onrender.com", // URL cơ sở của API
     timeout: 5000, // Thời gian timeout cho mỗi request là 5 giây
 });
 
@@ -44,7 +44,7 @@ instanceAxios.interceptors.request.use(
 const refreshToken = async (refresh_token) => {
     try {
         const response = await axios.post(
-            "https://uniqlo-be-c7v8.onrender.com/auth/refresh_token",
+            "https://uniqlo-be-f348.onrender.com/auth/refresh_token",
             null,
             {
                 headers: {
