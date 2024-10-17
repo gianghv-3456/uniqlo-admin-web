@@ -100,7 +100,7 @@ function Basic() {
         } else {
             try {
                 const result = await axios.post(
-                    "https://uniqlo-be-c7v8.onrender.com/auth/login",
+                    "https://uniqlo-be-f348.onrender.com/auth/login",
                     { ...values, role: ROLE.ADMIN }
                 );
                 if (result.data.statusCode === 200) {
